@@ -110,6 +110,13 @@ handoff instead of hanging.
 
 ## Install
 
+On this machine the desktop profile installs the **published package** — the
+dependency is `github:semantic-craft/dsh-zlib#<release-commit>`, the bundle is
+selected, and the runtime copy lives under
+`~/.dsh/profiles/desktop/node_modules/dsh-zlib-plugin`. Running the plugin needs
+no checkout of this repository; the two modes below are for developing it or for
+installing it elsewhere.
+
 ### Development — plugin manager `link:`
 
 A live profile composes on configuration change, so the bundle mounts without a
@@ -202,6 +209,7 @@ test/                     node --test: plugin, manifest, market, skill contract,
 ## Verification
 
 ```bash
+pnpm install                                 # dev dependencies, once (not needed at runtime)
 node --test                                  # unit + contract + host tests
 node scripts/sync-upstream.mjs --check       # skills equal upstream + adaptations
 node scripts/validate-market.mjs             # parseMarketIndex accepts the index

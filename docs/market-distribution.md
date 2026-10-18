@@ -104,8 +104,12 @@ The installed `zlib` body contains the appended host notes
 `Download directory on release builds`), so the distributed copy — not just the
 working tree — carries the failure coverage.
 
-The throwaway profile was deleted after the check; the desktop profile keeps the
-development `link:` install.
+The throwaway profile was deleted after the check. The desktop profile was then
+switched from the development `link:` to the same pinned target
+(`github:semantic-craft/dsh-zlib#ef0ac7b…`), so its runtime copy now lives under
+`~/.dsh/profiles/desktop/node_modules/dsh-zlib-plugin` and does not depend on
+this checkout. The host loader resolves that copy and registers both skills from
+it (checked with `resolveBundleDir` + `loadProfileDirectory`).
 
 ## Reproducing
 
