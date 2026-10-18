@@ -1,0 +1,75 @@
+{
+  "format": 1,
+  "title": {
+    "en": "dsh-zlib",
+    "zh": "dsh-zlib"
+  },
+  "description": {
+    "en": "DeepSeek Harness plugin market for the zlib bundle.",
+    "zh": "zlib 插件的 DeepSeek Harness 插件市场索引。"
+  },
+  "metadata": {
+    "categories": {
+      "productivity": {
+        "title": {
+          "en": "Productivity",
+          "zh": "效率"
+        }
+      }
+    },
+    "labels": {
+      "skills": {
+        "title": {
+          "en": "Skills",
+          "zh": "技能"
+        }
+      }
+    }
+  },
+  "plugins": [
+    {
+      "name": "dsh-zlib-plugin",
+      "title": {
+        "en": "Z-Library (zlib)",
+        "zh": "Z-Library（zlib）"
+      },
+      "description": {
+        "en": "Skills-only DeepSeek Harness bundle: search and download books from Z-Library with the zlib CLI, and deliver a local book to a Kindle.",
+        "zh": "只包含技能：用 zlib CLI 搜索并下载 Z-Library 的书籍，并把本地书籍发送到 Kindle。"
+      },
+      "author": "semantic-craft",
+      "homepage": "https://github.com/heartleo/zlib",
+      "repository": {
+        "url": "https://github.com/semantic-craft/dsh-zlib"
+      },
+      "metadata": {
+        "category": "productivity",
+        "keywords": [
+          "zlibrary",
+          "z-library",
+          "books",
+          "ebook",
+          "kindle",
+          "zlib"
+        ],
+        "labels": [
+          "skills"
+        ]
+      },
+      "versions": [
+        {
+          "version": "1.1.0",
+          "publishTimestamp": 1792292768,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/semantic-craft/dsh-zlib",
+            "commit": "8e5a440d82ba0cae8569f4075f99bb58b66d4784"
+          },
+          "engines": {
+            "dsh": ">=0.2.0-rc.2 <0.3.0"
+          }
+        }
+      ]
+    }
+  ]
+}
