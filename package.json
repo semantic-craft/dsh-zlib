@@ -1,0 +1,56 @@
+{
+  "name": "dsh-zlib-plugin",
+  "version": "1.1.0",
+  "description": "Skills-only DeepSeek Harness bundle: search and download books from Z-Library with the zlib CLI, and deliver a local book to a Kindle.",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh-bundle",
+    "zlibrary",
+    "z-library",
+    "books",
+    "ebook",
+    "kindle"
+  ],
+  "homepage": "https://github.com/heartleo/zlib",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/plugin.js",
+  "exports": {
+    ".": {
+      "default": "./src/plugin.js"
+    },
+    "./index.js": "./src/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "skills",
+    "market",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "scripts": {
+    "test": "node --test",
+    "sync:upstream": "node scripts/sync-upstream.mjs",
+    "check:upstream": "node scripts/sync-upstream.mjs --check",
+    "validate:market": "node scripts/validate-market.mjs",
+    "verify:host": "node scripts/verify-host.mjs"
+  },
+  "devDependencies": {
+    "@deepseek-ai/dsh-plugin-market-index": "0.2.1-rc.2"
+  }
+}

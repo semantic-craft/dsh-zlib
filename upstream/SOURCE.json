@@ -1,0 +1,48 @@
+{
+  "repository": "https://github.com/heartleo/zlib",
+  "commit": "6a299fdc59927f7e84f94390c4e54bfaf4d06cee",
+  "ref": "main",
+  "fetchedAt": "2026-10-18T03:00:34.426Z",
+  "files": [
+    {
+      "path": ".agents/plugins/marketplace.json",
+      "sha256": "5347673c6145df20a45f3fb71a0ae1fcb9def1779fe8508d6acbd4ac647d8806",
+      "bytes": 351
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "sha256": "9a7fd3f465c2ea45c85414f5d62d822cf85a4e9fb05847b5fb9cce1e0035c88d",
+      "bytes": 401
+    },
+    {
+      "path": "README.md",
+      "sha256": "b11b07ba8e299443020460ed2c161f5380c8a2a35ee71f5dd84cb407ddf86c86",
+      "bytes": 16003
+    },
+    {
+      "path": "plugins/zlib/.claude-plugin/plugin.json",
+      "sha256": "6dd302014c4aeb4350e056d2a33b239eef2c9371b73eb72144e22ce196732a45",
+      "bytes": 466
+    },
+    {
+      "path": "plugins/zlib/.codex-plugin/plugin.json",
+      "sha256": "e303a40bb0269833d80f6605d93a7e63f9537a1821de9aaa12d5a7d3512236c0",
+      "bytes": 1005
+    },
+    {
+      "path": "plugins/zlib/.skillignore",
+      "sha256": "11fe17314a686a98a70f13e2ff79332e2a0ff78fc128245bcbc9035c59b22352",
+      "bytes": 244
+    },
+    {
+      "path": "plugins/zlib/skills/kindle/SKILL.md",
+      "sha256": "9c941579d392f288e3607017dfa7f16f2e00f953acc5aa80907d1adb916a45bb",
+      "bytes": 5499
+    },
+    {
+      "path": "plugins/zlib/skills/zlib/SKILL.md",
+      "sha256": "6e9a4a5c76b55e161882973787241f43de2b6489eec1210df4fae3f42a3ec9ef",
+      "bytes": 13103
+    }
+  ]
+}

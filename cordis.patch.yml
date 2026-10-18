@@ -1,0 +1,6 @@
+# Bundle patch for dsh-zlib-plugin: mounted when this package is selected as a
+# dsh bundle. It inserts exactly one row — this package's own entry module —
+# which registers the bundled skills on the skill registry and adds nothing else.
+- insert:
+    - id: dsh-zlib
+      name: dsh-zlib-plugin
