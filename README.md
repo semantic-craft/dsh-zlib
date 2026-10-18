@@ -132,34 +132,36 @@ the same package — restart the host, or remount after editing only data files
 
 ### Distribution — plugin market index
 
-`market/index.json` is a [plugin market index format
-1](https://github.com/deepseek-ai) document. Its single version is a **git
-source pinned to a 40-hex commit**, so an install resolves to exactly this tree:
+The published form is a [plugin market index format
+1](https://github.com/deepseek-ai) document:
+
+- Repository: <https://github.com/semantic-craft/dsh-zlib> (public)
+- Index: <https://raw.githubusercontent.com/semantic-craft/dsh-zlib/main/market/index.json>
+- Install target: `git+https://github.com/semantic-craft/dsh-zlib.git#<40-hex-commit>`
+
+Its single version is a **git source pinned to a 40-hex commit**, so an install
+resolves to exactly that tree. `marketInstallTarget` produces the target; it is
+the value `plugin_market` hands to `plugin_manager`'s `install_bundle` (or
+`dsh plugin --profile <name> add <target>`). Register the index URL as a market
+source (`indexes` in the `plugin-market` row's config) to make it installable
+from Discover.
 
 ```bash
 node scripts/finalize-market.mjs      # regenerate from package.json + git HEAD
 node scripts/validate-market.mjs      # parseMarketIndex + marketInstallTarget
-node scripts/validate-market.mjs --resolve   # + let pnpm resolve the target
+node scripts/validate-market.mjs --resolve   # pnpm resolves the pinned target
 ```
-
-`marketInstallTarget` yields:
-
-```
-git+https://github.com/semantic-craft/dsh-zlib.git#<40-hex-commit>
-```
-
-which is the `target` passed to `plugin_manager`'s `install_bundle` (or
-`dsh plugin --profile <name> add <target>`). Serve the index at an HTTPS URL and
-register it as a market source (`indexes` in the `plugin-market` row's config).
 
 > **`pnpm view` and git targets.** `pnpm view` accepts only registry packages
 > (`ERR_PNPM_INVALID_PACKAGE_NAME` for `git+https://…`), so it cannot print
-> metadata for the commit-pinned target required here; that is a pnpm limitation,
-> not a defect in the index. The equivalent pnpm-native proof is
-> `validate-market.mjs --resolve`, which asks pnpm to resolve the exact target
-> and asserts the pinned commit appears in the lockfile. Once the package is also
-> published to a registry, an npm-source version (`name@version`) can be added
-> to the same index and `pnpm view name@version` applies to that entry.
+> metadata for the commit-pinned target required here; that is a pnpm limitation
+> for every non-registry spec, not a defect in the index. The equivalent
+> pnpm-native proof is `validate-market.mjs --resolve`, which asks pnpm to
+> resolve the exact target and asserts the pinned commit appears in the
+> lockfile; `docs/market-distribution.md` shows the lockfile and the end-to-end
+> install. Once the package is also published to a registry, an npm-source
+> version (`name@version`) can be added to the same index and
+> `pnpm view name@version` applies to that entry.
 
 ## Failure surfaces
 
@@ -219,6 +221,9 @@ Evidence behind the claims above, recorded as it was observed:
 - [`docs/codex-alignment.md`](docs/codex-alignment.md) — the same plugin
   installed on the Codex side with `codex plugin add zlib@zlib`, and the
   three-hunk diff between the two installs.
+- [`docs/market-distribution.md`](docs/market-distribution.md) — the published
+  index and target, the pnpm lockfile resolution, and installing that target
+  into a profile with `dsh plugin add`.
 
 ## Licensing and credits
 
