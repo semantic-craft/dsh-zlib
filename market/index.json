@@ -58,12 +58,12 @@
       },
       "versions": [
         {
-          "version": "1.1.0",
-          "publishTimestamp": 1792292768,
+          "version": "1.1.1",
+          "publishTimestamp": 1792293237,
           "source": {
             "type": "git",
             "url": "https://github.com/semantic-craft/dsh-zlib",
-            "commit": "8e5a440d82ba0cae8569f4075f99bb58b66d4784"
+            "commit": "ef0ac7baa8b3f21cfd865c8c128946c2f629973d"
           },
           "engines": {
             "dsh": ">=0.2.0-rc.2 <0.3.0"
