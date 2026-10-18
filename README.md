@@ -227,6 +227,13 @@ Evidence behind the claims above, recorded as it was observed:
 - [`docs/market-distribution.md`](docs/market-distribution.md) — the published
   index and target, the pnpm lockfile resolution, and installing that target
   into a profile with `dsh plugin add`.
+- [`docs/live-round-trip.md`](docs/live-round-trip.md) — an authenticated search
+  rendered as the skill's markdown table, then a download by ID with size,
+  MIME type, sha256, and the quota moving 0 → 1 of 10.
+- [`docs/domain-verification.md`](docs/domain-verification.md) — how to decide
+  whether a Z-Library mirror is genuine, with the 2026-10-18 header/challenge
+  fingerprints of `z-lib.gd`, `zlib.bz`, `z-library.sk` and the unconfirmed
+  look-alike `z-library.bz`.
 
 ## Licensing and credits
 
