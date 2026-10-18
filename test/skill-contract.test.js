@@ -53,6 +53,21 @@ test("zlib skill documents the logged-out handoff and the DiamWall mirror failur
   assert.match(body, /ZLIB_DOMAIN/u);
 });
 
+test("zlib skill covers the host-verified gaps beyond upstream: EAPI auth, domain config, release-build download dir", () => {
+  const body = skills.zlib.content;
+  assert.match(body, /^## Session and domain errors$/mu);
+  assert.match(body, /EAPI profile failed/u);
+  assert.match(body, /EAPI history failed/u);
+  assert.match(body, /EAPI search failed/u);
+  assert.match(body, /Invalid credentials/u);
+  assert.match(body, /Domain is not configured/u);
+  assert.match(body, /Invalid Z-Library domain/u);
+  assert.match(body, /^## Download directory on release builds$/mu);
+  assert.match(body, /release builds through v0\.0\.8 ignore it/u);
+  assert.match(body, /always pass `--dir` explicitly/u);
+  assert.match(body, /treat the `Saved to:` line as the only authority/u);
+});
+
 test("kindle skill keeps its non-interactive and secret-handling rules", () => {
   const body = skills.kindle.content;
   assert.match(body, /\*\*Always pass the file path\*\*/u);

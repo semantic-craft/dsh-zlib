@@ -174,7 +174,10 @@ agent reads; the tests assert the text is there and the host-side checks are rea
 | `zlib` binary missing | preflight `command -v zlib` → `BIN_MISSING` | stop, give `go install` instructions (no Homebrew tap), wait | yes |
 | `zlib` too old for `--json` | flag error / usage output | fall back to the static table forms; IDs come from the table's ID column | no |
 | Mirror blocked by DiamWall | `zlib doctor --eapi --json` statuses, HTTP 307/513/517 | pick `healthy`/`challenged` domain, have user set `ZLIB_DOMAIN`, retry | yes (user edits env file) |
-| Not logged in / session expired | `zlib profile` or any command prints `Not logged in` | friendly handoff: user runs `zlib login` in their own terminal | yes |
+| Not logged in / session expired | `zlib profile` or any command prints `Not logged in` or `session expired` | friendly handoff: user runs `zlib login` in their own terminal | yes |
+| EAPI session lapsed | `EAPI profile/history/search failed` or `Invalid credentials` (EAPI wording never says "Not logged in") | same login handoff; never runs login | yes |
+| Mirror misconfigured | `Domain is not configured` / `Invalid Z-Library domain` | user sets `ZLIB_DOMAIN`; a suggested `zlib login --domain` is handed to the user, never run | yes |
+| Release build ignores `ZLIB_DOWNLOAD_DIR` | `zlib download --help` shows only `--dir` (default `.`) | always pass `--dir`; trust only the `Saved to:` line; do not offer to make the variable permanent | no |
 | Download hangs on an old build | shell-side timeout, missing `Saved to:` | stop, verify the target directory, suggest upgrade | no |
 
 ## Layout

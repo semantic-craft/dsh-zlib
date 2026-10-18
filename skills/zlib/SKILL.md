@@ -181,3 +181,12 @@ Sending a downloaded file to Kindle (and the SMTP/Amazon setup it needs) lives i
 ## Blocked mirrors and DiamWall
 
 Most current Z-Library web domains put automated requests behind DiamWall, so a mirror can answer with HTTP 307, 513 or 517, `Access Denied | DiamWall`, or a JS challenge instead of book data. Before blaming the query, run `zlib doctor --eapi --json` and pick a domain whose `status` is `healthy`, or `challenged` — a challenged domain is usable because the client solves its JS proof-of-work automatically. Domains reported `diamwall_blocked`, `http_error`, `redirect_loop`, or `network_error` are not usable. Have the user set `ZLIB_DOMAIN=https://<that domain>` in `~/.config/zlib/.env` (the network-error bullet above shows the file), then retry. Signing in is still the user's own step.
+
+## Session and domain errors
+
+- **`EAPI profile failed`, `EAPI history failed`, `EAPI search failed`, or `Invalid credentials`** — an `--eapi` session that lapsed reports these instead of `Not logged in` or `session expired`. Treat any of them as the same authentication failure and give the separate-terminal `zlib login` handoff from preflight #2; never run login yourself.
+- **`Domain is not configured` or `Invalid Z-Library domain`** — a mirror configuration problem, not a query problem. Have the user set `ZLIB_DOMAIN` in `~/.config/zlib/.env` (the network-error bullet above shows the file). If the message suggests `zlib login --domain`, hand that command to the user instead of running it.
+
+## Download directory on release builds
+
+`ZLIB_DOWNLOAD_DIR` is newer than the latest release build: release builds through v0.0.8 ignore it even though this skill documents the fallback. Check `zlib download --help` first — if `--dir` is the only directory flag (default `.`), always pass `--dir` explicitly, treat the `Saved to:` line as the only authority on where the file landed, and do not offer to make the variable permanent.

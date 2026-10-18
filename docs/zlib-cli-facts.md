@@ -352,12 +352,25 @@ Testable substrings: `engines.dsh`, `{"engines.dsh":">=99.0.0"}`, `is incompatib
 
 ## 9. Gaps where the skill text does not cover a required failure surface
 
-Reported to the Lead; skills were **not** edited here.
+Reported to the Lead; skills were **not** edited by the facts teammate. The Lead
+then extended the documented appended adaptation (`scripts/sync-upstream.mjs`
+`APPENDED_SECTIONS`) to cover items 1, 2 and 4 in `skills/zlib/SKILL.md`; the
+`Resolved` notes below record the exact skill text. Items 3, 5, 6, 7 and 8 stand
+as testing/documentation notes rather than defects.
 
-1. **EAPI-mode auth failures are invisible to the skill's trigger phrases.** The skill only watches for `Not logged in` and `session expired`; in EAPI mode an expired/invalid session prints `✗ Error: zlibrary: EAPI profile failed: Invalid credentials` (and `EAPI history failed: …`, `EAPI search failed: …`). An agent following the skill literally can misclassify this as a network error. Required: treat any `EAPI (profile|history|search) failed` / `Invalid credentials` from `zlib profile` as the same login handoff. This is the only **hard** gap for the "session expired" row.
-2. **Domain-configuration errors are not named.** `Domain is not configured. Set ZLIB_DOMAIN or run zlib login --domain URL again.`, `Invalid Z-Library domain: domain must be an HTTPS origin`, and `…not in the allowed Z-Library suffix list` are configuration failures (no request is made) with the same remediation as DiamWall; the skill's network bullet is generic and does not name these strings.
+1. **EAPI-mode auth failures are invisible to the skill's trigger phrases.** The skill only watches for `Not logged in` and `session expired`; in EAPI mode an expired/invalid session prints `✗ Error: zlibrary: EAPI profile failed: Invalid credentials` (and `EAPI history failed: …`, `EAPI search failed: …`). An agent following the skill literally can misclassify this as a network error. Required: treat any `EAPI (profile|history|search) failed` / `Invalid credentials` from `zlib profile` as the same login handoff. This is the only **hard** gap for the "session expired" row. **Resolved:** the
+appended "Session and domain errors" note now names `EAPI profile failed`,
+`EAPI history failed`, `EAPI search failed` and `Invalid credentials` and maps
+them to the same separate-terminal login handoff.
+2. **Domain-configuration errors are not named.** `Domain is not configured. Set ZLIB_DOMAIN or run zlib login --domain URL again.`, `Invalid Z-Library domain: domain must be an HTTPS origin`, and `…not in the allowed Z-Library suffix list` are configuration failures (no request is made) with the same remediation as DiamWall; the skill's network bullet is generic and does not name these strings. **Resolved:**
+the appended note names `Domain is not configured` and `Invalid Z-Library domain`,
+sends the fix to the user's `ZLIB_DOMAIN` edit, and hands `zlib login --domain`
+to the user instead of running it.
 3. **`unknown flag: --json` vs `not recognized`.** The skill says "not recognized"; the CLI literal is `unknown flag: --json`. A test must assert the skill phrase and the CLI phrase separately; the skill intentionally has no `unknown flag` string.
 4. **`ZLIB_DOWNLOAD_DIR` is documented by the synced skill but not implemented by the installed CLI.** v0.0.8 is the newest **release** (`go list -m -versions` ends at v0.0.8) and its source/binary have no `ZLIB_DOWNLOAD_DIR` fallback: `destDirFlag()` only reads `--dir` (default `"."`), the help line is `Destination directory. (default ".")`, and the literal appears **0** times in the binary. The feature exists only on main (`v0.0.9-0.20260907080718-6a299fdc5992`: `downloadDirEnvVar = "ZLIB_DOWNLOAD_DIR"`, help `Falls back to $ZLIB_DOWNLOAD_DIR when omitted`). The skill's hedge ("Older zlib builds ignore `ZLIB_DOWNLOAD_DIR` … pass `--dir` explicitly … suggest `go install …@latest`") correctly detects it, but `@latest` installs v0.0.8 again, so the suggested upgrade cannot fix it. Consequence on this machine: if the user has `ZLIB_DOWNLOAD_DIR` set and the agent omits `--dir`, the file lands in the cwd; trust the `Saved to:` line and pass `--dir`. Tests should assert the hedge text, not that the installed binary honours the variable.
+**Resolved:** the appended "Download directory on release builds" note tells the
+agent to check `zlib download --help`, always pass `--dir` on release builds,
+trust the `Saved to:` line, and not offer to make the variable permanent.
 5. **`engines.dsh` unsatisfied cannot be covered by `SKILL.md`.** When the bundle is skipped the skills are not registered, so no skill text is loaded to react. The required response is stop/user-action and it lives in the README failure table + `test/host-contract.test.js` / `scripts/verify-host.mjs`; do not assert skill text for it.
 6. **`zlib doctor` exit code carries no health information** (always 0, even all-`network_error`). The skill says to pick by `status` (correct), but any test/agent that checks exit status will pass on a fully blocked network. Documented here so the contract test parses JSON, not exit codes.
 7. **Full-line wording differs per command.** `session expired` arrives with the prefix `✗ Error: zlibrary:` and, for `download`, an extra `failed to fetch book:` wrapper (`history --download`: `failed to load history page N:`). Tests must match a substring (`session expired`, `zlib login`) rather than a whole line; no skill change needed.
@@ -370,7 +383,7 @@ Reported to the Lead; skills were **not** edited here.
 * Main-branch snapshot: `~/go/pkg/mod/github.com/heartleo/zlib@v0.0.9-0.20260907080718-6a299fdc5992/` (commit `6a299fdc59927f7e84f94390c4e54bfaf4d06cee`, also vendored under `upstream/heartleo-zlib-6a299fdc59927f7e84f94390c4e54bfaf4d06cee/`).
 * Upstream remediation text: `/tmp/upstream/README.md` lines 94-125 and 265-285 (vendored README is the same commit).
 * Host compatibility code/diagnostics: `/Applications/DeepSeek Harness.app/Contents/Resources/app.asar` (`plugin-compatibility.js` region); live proof `node scripts/verify-host.mjs` (# host dsh 0.2.1-rc.2, electron 44.7.0).
-* Current skill text: `skills/zlib/SKILL.md` (183 lines), `skills/kindle/SKILL.md` (80 lines); upstream bodies in `upstream/…/plugins/zlib/skills/`.
+* Current skill text: `skills/zlib/SKILL.md` (192 lines), `skills/kindle/SKILL.md` (80 lines); upstream bodies in `upstream/…/plugins/zlib/skills/`.
 * Synthetic-session hives (disposable, outside the repo): `/tmp/zlib-probe-home`, `/tmp/zlib-probe-home-expired`, `/tmp/zlib-probe-home-eapi`, `/tmp/zlib-probe-home-logout`, `/tmp/goprobe`.
 
 ## Appendix B — environment caveats for future probes

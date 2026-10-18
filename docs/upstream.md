@@ -135,35 +135,43 @@ Bundled `skills/zlib/SKILL.md:30`:
    > `zlib` is not on your PATH. Install it with `go install github.com/heartleo/zlib/cmd/zlib@latest`, then ask me again.
 ```
 
-### 3. Appended "Blocked mirrors and DiamWall" section
+### 3. Appended host notes for failure surfaces upstream's SKILL.md does not cover
 
-The installed zlib CLI can meet a DiamWall-blocked mirror; upstream's README
-documents that failure surface but its SKILL.md does not. This section uses only
-commands upstream already documents (`zlib doctor --eapi --json`,
-`ZLIB_DOMAIN`) and keeps signing in as the user's own step. Applies to
-`skills/zlib/SKILL.md` only.
+Three failure surfaces were verified against zlib v0.0.8 on this machine and are
+not covered by upstream's skill text (`docs/zlib-cli-facts.md` §5, §9). Each
+note uses only commands upstream already documents (`zlib doctor --eapi --json`,
+the `zlib login` handoff, `ZLIB_DOMAIN`, `--dir`) and keeps signing in as the
+user's own step. Applies to `skills/zlib/SKILL.md` only.
+
+1. **Blocked mirrors and DiamWall** — upstream's README documents this, its
+   SKILL.md does not. The note teaches the `healthy`/`challenged` versus
+   `diamwall_blocked`/`http_error`/`redirect_loop`/`network_error`
+   vocabulary and sends the `ZLIB_DOMAIN` edit to the user.
+2. **Session and domain errors** — an `--eapi` session that lapses prints
+   `EAPI profile failed` / `Invalid credentials`, and mirror misconfiguration
+   prints `Domain is not configured` / `Invalid Z-Library domain`; neither
+   says `Not logged in` or `session expired`, the only triggers upstream
+   names. The note maps both to the existing handoff and never runs login
+   (including `zlib login --domain`, which the message may suggest).
+3. **Download directory on release builds** — upstream's body promises a
+   `ZLIB_DOWNLOAD_DIR` fallback and offers to make it permanent, but release
+   builds through v0.0.8 have no such variable (`@latest` is v0.0.8). The note
+   tells the agent to check `zlib download --help`, pass `--dir` explicitly on
+   such builds, and trust only the `Saved to:` line.
 
 Placement: appended after upstream's last line
-(`plugins/zlib/skills/zlib/SKILL.md:179`), with exactly one blank line
-before the heading, and the file ends with one newline. Upstream's last line is:
+(`plugins/zlib/skills/zlib/SKILL.md:179`), with exactly one blank line before
+the first heading and one trailing newline. Upstream's last line is:
 
 ```text
 - Respect the user's daily download limit shown by `zlib profile`; don't loop downloads past it.
 ```
 
-The appended bytes (verbatim; the first newline creates the blank line between
-upstream's last line and the heading) are:
-
-```text
-
-## Blocked mirrors and DiamWall
-
-Most current Z-Library web domains put automated requests behind DiamWall, so a mirror can answer with HTTP 307, 513 or 517, `Access Denied | DiamWall`, or a JS challenge instead of book data. Before blaming the query, run `zlib doctor --eapi --json` and pick a domain whose `status` is `healthy`, or `challenged` — a challenged domain is usable because the client solves its JS proof-of-work automatically. Domains reported `diamwall_blocked`, `http_error`, `redirect_loop`, or `network_error` are not usable. Have the user set `ZLIB_DOMAIN=https://<that domain>` in `~/.config/zlib/.env` (the network-error bullet above shows the file), then retry. Signing in is still the user's own step.
-```
-
-In the bundled file this is lines 180-183: line 180 blank, line 181
-`## Blocked mirrors and DiamWall`, line 182 blank, line 183 the
-paragraph above.
+In the bundled file the appended block is lines 180-192: line 180 blank, then
+`## Blocked mirrors and DiamWall` (181), `## Session and domain errors`
+(185) and `## Download directory on release builds` (190). The exact bytes are
+in `scripts/sync-upstream.mjs`'s `APPENDED_SECTIONS`, which is the authoritative
+copy; the check mode regenerates from it.
 
 ## Verification
 
@@ -177,7 +185,7 @@ shasum -a 256 upstream/heartleo-zlib-6a299fdc59927f7e84f94390c4e54bfaf4d06cee/pl
 shasum -a 256 upstream/heartleo-zlib-6a299fdc59927f7e84f94390c4e54bfaf4d06cee/plugins/zlib/skills/kindle/SKILL.md
 # 9c941579d392f288e3607017dfa7f16f2e00f953acc5aa80907d1adb916a45bb
 
-# Exactly the three adaptations, and nothing else:
+# Exactly the three adaptation classes (rename, tap removal, appended block), and nothing else:
 diff -u upstream/heartleo-zlib-6a299fdc59927f7e84f94390c4e54bfaf4d06cee/plugins/zlib/skills/zlib/SKILL.md skills/zlib/SKILL.md
 diff -u upstream/heartleo-zlib-6a299fdc59927f7e84f94390c4e54bfaf4d06cee/plugins/zlib/skills/kindle/SKILL.md skills/kindle/SKILL.md  # empty
 

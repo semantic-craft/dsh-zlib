@@ -1,6 +1,6 @@
 {
   "name": "dsh-zlib-plugin",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Skills-only DeepSeek Harness bundle: search and download books from Z-Library with the zlib CLI, and deliver a local book to a Kindle.",
   "keywords": [
     "dsh",
