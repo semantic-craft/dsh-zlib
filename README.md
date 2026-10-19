@@ -21,7 +21,7 @@ tests. The evidence for keeping it:
 - The desktop profile already declares and selects it:
   ```json
   // ~/.dsh/profiles/desktop/package.json
-  "dependencies": { "dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/dsh-zlib" },
+  "dependencies": { "dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/_forks/dsh-zlib" },
   "dsh": { "profile": { "bundles": [ /* … */ "dsh-zlib-plugin" ] } }
   ```
 - It is actually mounted: this project's own session skill catalog lists
@@ -124,10 +124,10 @@ restart. Install from the Web UI's Plugins page, or with the CLI equivalent that
 the manager's operation uses:
 
 ```bash
-dsh plugin --profile desktop add link:/Users/xianweizhang/Projects/dsh-zlib
+dsh plugin --profile desktop add link:/Users/xianweizhang/Projects/_forks/dsh-zlib
 ```
 
-The profile then contains `"dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/dsh-zlib"`
+The profile then contains `"dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/_forks/dsh-zlib"`
 and lists the bundle; the composition mounts `src/plugin.js`, which registers
 both skills. To remove it:
 `dsh plugin --profile desktop remove dsh-zlib-plugin`.

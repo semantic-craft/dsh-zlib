@@ -43,7 +43,7 @@ and `.skillignore`.
 ## DSH side (this repository)
 
 ```console
-$ dsh plugin --profile desktop add link:/Users/xianweizhang/Projects/dsh-zlib
+$ dsh plugin --profile desktop add link:/Users/xianweizhang/Projects/_forks/dsh-zlib
 ✓ Lockfile passes supply-chain policies (verified 6s ago)
 [WARN] Issues with peer dependencies found. Run "pnpm peers check" to list them.
 Done in 415ms using pnpm v11.28.5
@@ -53,16 +53,16 @@ The link was already installed, so this run is idempotent. A throwaway profile
 showed the fresh-install form of the same operation:
 
 ```console
-$ dsh plugin --profile zlib-selftest add link:/Users/xianweizhang/Projects/dsh-zlib
+$ dsh plugin --profile zlib-selftest add link:/Users/xianweizhang/Projects/_forks/dsh-zlib
 dependencies:
-+ dsh-zlib-plugin 1.1.0 <- ../../../Projects/dsh-zlib
++ dsh-zlib-plugin 1.1.0 <- ../../../Projects/_forks/dsh-zlib
 Done in 203ms using pnpm v11.28.5
 ```
 
 `~/.dsh/profiles/desktop/package.json` records it:
 
 ```json
-"dependencies": { "dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/dsh-zlib" },
+"dependencies": { "dsh-zlib-plugin": "link:/Users/xianweizhang/Projects/_forks/dsh-zlib" },
 "dsh": { "profile": { "bundles": [ "...", "dsh-zlib-plugin" ] } }
 ```
 
